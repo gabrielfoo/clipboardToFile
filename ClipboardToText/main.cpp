@@ -4,11 +4,18 @@
 #include "ClipboardReader.h"
 
 
+
 void sendKeyWithSendInput(const WORD key, const bool iskeystrokeUp);
 void CtrlVtoActiveWindow();
 
+
+
+
 int main() {
 
+
+	SetConsoleOutputCP(CP_UTF8);
+	setvbuf(stdout, nullptr, _IOFBF, 1000);
 	std::cout << "ClipboardToText start" << std::endl;
 	//FreeConsole();
 	KeyStrokeCombo ActivationKeyCombo(VK_CONTROL, VK_SHIFT, 'V');
@@ -20,12 +27,8 @@ int main() {
 
 		if (ActivationKeyCombo.isKeyComboPressed())
 		{
-			
-			std::cout << "test 1 success" << std::endl;
 			clip.RetrieveClipboardText();
-			std::cout << "2" << std::endl;
 			Sleep(500);
-			std::cout << "3" << std::endl;
 			CtrlVtoActiveWindow();
 			Sleep(1000);
 
@@ -33,8 +36,8 @@ int main() {
 
 	}
 
-
 }
+
 
 void CtrlVtoActiveWindow()
 {

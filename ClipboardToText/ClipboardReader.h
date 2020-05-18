@@ -6,7 +6,7 @@ public:
 	void RetrieveClipboardText();
 	
 private:
-	void TurnClipboardTextToFile(const std::string& text);
-	std::string sSaveFileToTempFolder(const std::string& text);
+	void TurnClipboardTextToFile(const std::wstring& text);
+	std::string sSaveFileToTempFolder(const std::wstring& text);
 	std::string sGenerateFileNameBasedOnTime();
 };

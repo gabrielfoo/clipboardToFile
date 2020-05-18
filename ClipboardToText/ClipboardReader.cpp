@@ -1,77 +1,98 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "ClipboardReader.h"
+#define UNICODE
 #include <fstream>
 #include <chrono>
 #include <ctime>
 #include <sstream>
 #include <iomanip>
+#include <locale>
 #include <ShlObj_core.h>
+#include <fcntl.h>
+#include <io.h>
+
 
 
 void ClipboardMan::RetrieveClipboardText()
 {
 	HGLOBAL cbuf;
-	const char *ptr;
-	std::string sClipboardText;
+	const wchar_t *ptr;
+	std::wstring sClipboardText;
 
-	if (IsClipboardFormatAvailable(CF_TEXT)) {
+	if (IsClipboardFormatAvailable(CF_UNICODETEXT)) { //if not found, will return and do a Ctrl-V nevertheless
 		if (OpenClipboard(NULL))
 		{
-			cbuf = GetClipboardData(CF_TEXT);
+			cbuf = GetClipboardData(CF_UNICODETEXT);
 
-			ptr = (const char*)GlobalLock(cbuf);
+			ptr = (const wchar_t*)GlobalLock(cbuf);
+			
 			sClipboardText = ptr;
+
 			GlobalUnlock(cbuf);
 			TurnClipboardTextToFile(sClipboardText);
 			CloseClipboard();
 		}
 
-
 	}
+	
 
 }
 
-void ClipboardMan::TurnClipboardTextToFile(const std::string& text)
+void ClipboardMan::TurnClipboardTextToFile(const std::wstring& text)
 {
+	//put filePath into a char buffer
 	std::string sFilePath = sSaveFileToTempFolder(text);
+	int iLengthOfFilePath = sFilePath.length() + 2;
+	char* pszFiles = new char[iLengthOfFilePath]();
+	sprintf(pszFiles, "%s", sFilePath.c_str());
 	
 
-	const char* sFiles = sFilePath.c_str();
+	int nSize = sizeof(DROPFILES) + iLengthOfFilePath;
+	HANDLE hData = ::GlobalAlloc(GHND, nSize);
+	LPDROPFILES pDropFiles = (LPDROPFILES) ::GlobalLock(hData);
+	pDropFiles->pFiles = sizeof(DROPFILES);
 
-	DROPFILES dobj = { 20, { 0, 0 }, 0, 1 };
-	int nLen = sFilePath.length()+1;
-	int nGblLen = sizeof(dobj) + nLen * 2 + 5;//lots of nulls and multibyte_char
-	HGLOBAL hGbl = GlobalAlloc(GMEM_ZEROINIT | GMEM_MOVEABLE | GMEM_DDESHARE, nGblLen);
-	char* sData = (char*)::GlobalLock(hGbl);
-	memcpy(sData, &dobj, 20);
-	char* sWStr = sData + 20;
-	for (int i = 0; i < nLen * 2; i += 2)
-	{
-		sWStr[i] = sFiles[i / 2];
-	}
-	::GlobalUnlock(hGbl);
-	EmptyClipboard();
-	SetClipboardData(CF_HDROP, hGbl);
+
+	pDropFiles->fWide = FALSE;
+
+	LPBYTE pData = (LPBYTE)pDropFiles + sizeof(DROPFILES);
+	::CopyMemory(pData, pszFiles, iLengthOfFilePath);
+	::GlobalUnlock(hData);
+	::EmptyClipboard();
+	::SetClipboardData(CF_HDROP, hData);
 
 	
 }
 
 //Purpose:
 //Saves text from Clipboard into Temp file and returns string to filepath
-std::string ClipboardMan::sSaveFileToTempFolder(const std::string& text)
+std::string ClipboardMan::sSaveFileToTempFolder(const std::wstring& text)
 {
 	std::string sWindowsTempFolderPath = std::filesystem::temp_directory_path().string();
 	std::ofstream myfile;
 
-	std::string sTempFileName = sGenerateFileNameBasedOnTime();
+	std::string sTempFileNameWithTempFolder = sWindowsTempFolderPath+ sGenerateFileNameBasedOnTime();
 
-	myfile.open(sWindowsTempFolderPath + sTempFileName);
-	myfile.write(text.c_str(), text.length() + 1);
-	myfile.close();
+	_setmode(_fileno(stdout), _O_U8TEXT);//wcout instead of cout
+	std::locale loc_utf8(std::locale(), new std::codecvt_utf8<wchar_t>);
+	std::wofstream fout(sTempFileNameWithTempFolder, std::ios::binary);
 
-	std::string sMyFilePath = sWindowsTempFolderPath + sTempFileName;
+	try
+	{
+		if (fout)
+		{
+			fout.imbue(loc_utf8);
+			fout << text;
+			fout.close();
+		}
+	}
+	catch (std::exception const & ex)
+	{
+		std::cerr << ex.what() << std::endl;
+	}
 
-	return sMyFilePath;
+
+	return sTempFileNameWithTempFolder;
 }
 
 std::string ClipboardMan::sGenerateFileNameBasedOnTime()
@@ -80,7 +101,7 @@ std::string ClipboardMan::sGenerateFileNameBasedOnTime()
 	auto in_time_t = std::chrono::system_clock::to_time_t(now);
 
 	std::stringstream ss;
-	ss << std::put_time(std::localtime(&in_time_t), "text_%Y-%m-%d_%H_%M_%S.txt");
+	ss << std::put_time(std::localtime(&in_time_t), "text_%Y-%m-%d_%H-%M-%S.txt");//filename: text_YYYY-MM-DD-HH-MM-SS.txt
 
 	return ss.str();
 
