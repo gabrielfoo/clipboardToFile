@@ -7,7 +7,7 @@ using namespace System::Threading;
 public ref class ThreadWrapper
 {
 public:
-	static Thread^ threadClipboardtoFile;
+	static Thread^ threadClipboardtoFile = nullptr;
 public:
 	static void BeginClipBoardFunction()
 	{

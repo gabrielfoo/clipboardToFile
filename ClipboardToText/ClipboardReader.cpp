@@ -34,29 +34,27 @@ void ClipboardMan::RetrieveClipboardText()
 		}
 
 	}
-	
-
 }
 
 void ClipboardMan::TurnClipboardTextToFile(const std::wstring& text)
 {
-	//put filePath into a char buffer
+	//put filePath into a char buffer for legacy API compatibility
 	std::string sFilePath = sSaveFileToTempFolder(text);
 	int iLengthOfFilePath = sFilePath.length() + 2;
-	char* pszFiles = new char[iLengthOfFilePath]();
-	sprintf(pszFiles, "%s", sFilePath.c_str());
+	std::unique_ptr<char> pszFiles(new char[iLengthOfFilePath]());
+	sprintf(pszFiles.get(), "%s", sFilePath.c_str());
 	
-
+	//put the file path into clipboard by initializing DROPFILES struct and putting filepath into pData member
 	int nSize = sizeof(DROPFILES) + iLengthOfFilePath;
 	HANDLE hData = ::GlobalAlloc(GHND, nSize);
 	LPDROPFILES pDropFiles = (LPDROPFILES) ::GlobalLock(hData);
 	pDropFiles->pFiles = sizeof(DROPFILES);
 
-
+	//if fileName is UNICODE, change to TRUE
 	pDropFiles->fWide = FALSE;
 
 	LPBYTE pData = (LPBYTE)pDropFiles + sizeof(DROPFILES);
-	::CopyMemory(pData, pszFiles, iLengthOfFilePath);
+	::CopyMemory(pData, pszFiles.get(), iLengthOfFilePath);
 	::GlobalUnlock(hData);
 	::EmptyClipboard();
 	::SetClipboardData(CF_HDROP, hData);

@@ -116,7 +116,10 @@ namespace ClipboardToText {
 	}
 private: System::Void toolStripMenuItem1_Click(System::Object^  sender, System::EventArgs^  e) {
 	atomicboolKeepThreadAlive = false;
-	ThreadWrapper::threadClipboardtoFile->Join();
+	if (ThreadWrapper::threadClipboardtoFile != nullptr)
+	{
+		ThreadWrapper::threadClipboardtoFile->Join();
+	}
 	Application::Exit();
 }
 };

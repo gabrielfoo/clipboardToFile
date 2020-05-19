@@ -95,7 +95,8 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies />
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -104,10 +105,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -119,7 +122,8 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies />
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -127,17 +131,24 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ClipboardReader.h" />
+    <ClInclude Include="ClipboardToTextmain.h" />
     <ClInclude Include="KeyStrokeCombo.h" />
+    <ClInclude Include="MyForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="ThreadWrapperCPPCLI.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />
@@ -145,8 +156,9 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="ClipboardReader.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ClipboardToTextmain.cpp" />
     <ClCompile Include="KeyStrokeCombo.cpp" />
+    <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -161,7 +173,14 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MyForm.resx">
+      <DependentUpon>MyForm.h</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

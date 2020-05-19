@@ -27,6 +27,15 @@
     <ClInclude Include="ClipboardReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MyForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClipboardToTextmain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadWrapperCPPCLI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">
@@ -46,10 +55,13 @@
     <ClCompile Include="ClipboardReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="_ClipboardReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="_ClipboardReader.cpp">
+    <ClCompile Include="MyForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClipboardToTextmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -57,5 +69,10 @@
     <Image Include="app.ico">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MyForm.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
