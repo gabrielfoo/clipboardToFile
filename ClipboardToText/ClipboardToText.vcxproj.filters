@@ -36,6 +36,15 @@
     <ClInclude Include="ThreadWrapperCPPCLI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ClipboardDataOutputAbstractFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClipboardReaderFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataToFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">
@@ -62,6 +71,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ClipboardToTextmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataToFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

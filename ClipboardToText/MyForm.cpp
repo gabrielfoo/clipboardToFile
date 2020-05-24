@@ -20,7 +20,7 @@ int main(array <String^>^ args) {
 
 	Application::Run(%form);
 	atomicboolKeepThreadAlive = false;
-	ThreadWrapper::threadClipboardtoFile->Join();
+	ThreadWrapper::threadClipboardtoFile->Join(); //Graceful shutdown
 	return 0;
 }
 

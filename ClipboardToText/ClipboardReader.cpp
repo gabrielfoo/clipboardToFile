@@ -13,7 +13,7 @@
 
 
 
-void ClipboardMan::RetrieveClipboardText()
+void ClipboardMan::RetrieveClipboardData()
 {
 	HGLOBAL cbuf;
 	const wchar_t *ptr;

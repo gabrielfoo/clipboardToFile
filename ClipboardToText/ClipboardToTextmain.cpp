@@ -3,6 +3,7 @@
 #include "KeyStrokeCombo.h"
 #include "ClipboardReader.h"
 
+
 std::atomic<bool> atomicboolKeepThreadAlive = true;
 
 void sendKeyWithSendInput(const WORD key, const bool iskeystrokeUp);
@@ -10,7 +11,6 @@ void CtrlVtoActiveWindow();
 
 
 int real_main() {
-
 
 	SetConsoleOutputCP(CP_UTF8);
 	setvbuf(stdout, nullptr, _IOFBF, 1000);
@@ -22,7 +22,7 @@ int real_main() {
 
 		if (ActivationKeyCombo.isKeyComboPressed())
 		{
-			clip.RetrieveClipboardText();
+			clip.RetrieveClipboardData();
 			Sleep(500);
 			CtrlVtoActiveWindow();
 			Sleep(1000);

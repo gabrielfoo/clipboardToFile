@@ -140,8 +140,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ClipboardDataOutputAbstractFactory.h" />
     <ClInclude Include="ClipboardReader.h" />
+    <ClInclude Include="ClipboardReaderFactory.h" />
     <ClInclude Include="ClipboardToTextmain.h" />
+    <ClInclude Include="DataToFile.h" />
     <ClInclude Include="KeyStrokeCombo.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
@@ -157,6 +160,7 @@
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="ClipboardReader.cpp" />
     <ClCompile Include="ClipboardToTextmain.cpp" />
+    <ClCompile Include="DataToFile.cpp" />
     <ClCompile Include="KeyStrokeCombo.cpp" />
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="stdafx.cpp">
