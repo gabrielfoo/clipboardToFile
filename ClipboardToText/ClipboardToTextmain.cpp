@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ClipboardToTextmain.h"
 #include "KeyStrokeCombo.h"
-#include "ClipboardReader.h"
+#include "ClipboardAPIHandler.h"
 
 
 std::atomic<bool> atomicboolKeepThreadAlive = true;
@@ -14,13 +14,13 @@ int real_main() {
 
 	SetConsoleOutputCP(CP_UTF8);
 	setvbuf(stdout, nullptr, _IOFBF, 1000);
-	KeyStrokeCombo ActivationKeyCombo(VK_CONTROL, VK_SHIFT, 'V');
+	KeyStrokeCombo CTRLSHIFTVCombo(VK_CONTROL, VK_SHIFT, 'V');
 	//AllocConsole();
-	ClipboardMan clip;
+	ClipboardAPIHandler clip;
 	
 	while (atomicboolKeepThreadAlive) {
 
-		if (ActivationKeyCombo.isKeyComboPressed())
+		if (CTRLSHIFTVCombo.isKeyComboPressed())
 		{
 			clip.RetrieveClipboardData();
 			Sleep(500);

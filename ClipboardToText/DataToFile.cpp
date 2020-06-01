@@ -10,7 +10,8 @@
 #include <io.h>
 
 
-//Implementation of function in Abstract class DataToFileFactory
+//Purpose of sGenerateFileNameBasedOnTime
+//Generate file name easily. Use a FileNameStrategy implementation based on available examples to get a prefix name and extension name of your file type. Function is available for all DataToFileFactory implementations if you want generated name that says "text_YYYY_MM_DD_HH_MM_SS.txt"
 const std::string DataToFileFactory::sGenerateFileNameBasedOnTime(const DataToFileFactory::FileNameStrategy& kFiletypeDetails) const
 {
 	auto now = std::chrono::system_clock::now();
@@ -59,5 +60,35 @@ const std::string TextDataToFile::SaveData(void const * const kvData) const
 
 
 	return sTempFileNameWithTempFolder;
+
+}
+
+
+const std::string BitmapIMGDataToFile::SaveData(void const * const kvData) const
+{
+	std::string sWindowsTempFolderPath = std::filesystem::temp_directory_path().string();
+	ImgFileName describeFileAsImg;
+	std::string sTempFileNameWithTempFolder = sWindowsTempFolderPath + sGenerateFileNameBasedOnTime(describeFileAsImg);
+
+	std::ofstream fout(sTempFileNameWithTempFolder, std::ios::binary);
+
+	if (fout)
+	{
+		fout << (char*)kvData;
+		fout.close();
+	}
+
+	return sTempFileNameWithTempFolder;
+}
+
+std::unique_ptr <DataToFileFactory> DataToFileFactory::createChosenFileSaveProduct(const DataToFileFactoryChoice& choice)
+{
+	switch (choice)
+	{
+	case Choice_TextToFile:
+		return std::make_unique <TextDataToFile>();
+	case Choice_ImageToFile:
+		return std::make_unique <BitmapIMGDataToFile>();
+	}
 
 }

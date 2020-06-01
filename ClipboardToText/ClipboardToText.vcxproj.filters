@@ -24,9 +24,6 @@
     <ClInclude Include="KeyStrokeCombo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ClipboardReader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MyForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -45,6 +42,9 @@
     <ClInclude Include="DataToFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ClipboardAPIHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">
@@ -61,9 +61,6 @@
     <ClCompile Include="KeyStrokeCombo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ClipboardReader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="_ClipboardReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -74,6 +71,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DataToFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClipboardAPIHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
