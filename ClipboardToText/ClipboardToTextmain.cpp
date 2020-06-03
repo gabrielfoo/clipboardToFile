@@ -12,8 +12,8 @@ void CtrlVtoActiveWindow();
 
 int real_main() {
 
-	SetConsoleOutputCP(CP_UTF8);
-	setvbuf(stdout, nullptr, _IOFBF, 1000);
+	//SetConsoleOutputCP(CP_UTF8);
+	//setvbuf(stdout, nullptr, _IOFBF, 1000);
 	KeyStrokeCombo CTRLSHIFTVCombo(VK_CONTROL, VK_SHIFT, 'V');
 	//AllocConsole();
 	ClipboardAPIHandler clip;

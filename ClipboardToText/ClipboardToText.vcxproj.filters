@@ -61,9 +61,6 @@
     <ClCompile Include="KeyStrokeCombo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="_ClipboardReader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MyForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
