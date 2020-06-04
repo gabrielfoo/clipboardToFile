@@ -33,7 +33,7 @@ protected:
 
 
 public:
-	virtual const std::string SaveData(void const * const kvData) const = 0;
+	virtual const std::string SaveToFileFirst(void const * const kvData) const = 0;
 
 };
 
@@ -53,7 +53,7 @@ private:
 		}
 	};
 public:
-	const std::string SaveData(void const * const kvData) const override;
+	const std::string SaveToFileFirst(void const * const kvData) const override;
 };
 
 
@@ -73,7 +73,7 @@ private:
 		}
 	};
 public:
-	const std::string SaveData(void const * const kvData) const override;
+	const std::string SaveToFileFirst(void const * const kvData) const override;
 
 private:
 	//credits to https://engineering.purdue.edu/ece264/16au/hw/HW13#:~:text=The%20structure%20of%20the%20BMP,red%2C%20green%2C%20and%20blue.
@@ -103,7 +103,7 @@ private:
 	typedef struct {
 		FirstPartOfHeader header;
 		DIBPartOfHeader dib_header;
-		unsigned char* data;
+		char* data;
 	}BMP;
 };
 
