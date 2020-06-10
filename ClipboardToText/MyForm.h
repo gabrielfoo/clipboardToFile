@@ -71,9 +71,12 @@ namespace ClipboardToText {
 			// 
 			// notifyIcon1
 			// 
+			this->notifyIcon1->BalloonTipIcon = System::Windows::Forms::ToolTipIcon::Info;
+			this->notifyIcon1->BalloonTipText = L"Use CTRL-SHIFT-V to paste to file with text or images in the Windows Clipboard. ";
+			this->notifyIcon1->BalloonTipTitle = L"Clipboard To File started.";
 			this->notifyIcon1->ContextMenuStrip = this->contextMenuStrip1;
 			this->notifyIcon1->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"notifyIcon1.Icon")));
-			this->notifyIcon1->Text = L"Clipboard To Text";
+			this->notifyIcon1->Text = L"Clipboard To File";
 			this->notifyIcon1->Visible = true;
 			this->notifyIcon1->MouseDoubleClick += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::notifyIcon1_MouseDoubleClick_1);
 			// 
@@ -95,12 +98,17 @@ namespace ClipboardToText {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::Color::Black;
+			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
 			this->ClientSize = System::Drawing::Size(284, 261);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"MyForm";
 			this->Opacity = 0;
-			this->ShowIcon = false;
 			this->ShowInTaskbar = false;
-			this->Text = L"MyForm";
+			this->Text = L"ClipboardToFile";
+			this->WindowState = System::Windows::Forms::FormWindowState::Minimized;
+			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			this->contextMenuStrip1->ResumeLayout(false);
 			this->ResumeLayout(false);
 
@@ -111,6 +119,8 @@ namespace ClipboardToText {
 	private: System::Void contextMenuStrip1_Opening(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
 	}
 	private: System::Void notifyIcon1_MouseDoubleClick_1(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+
+		this->notifyIcon1->ShowBalloonTip(10000);
 	}
 	private: System::Void toolStripTextBox1_Click(System::Object^  sender, System::EventArgs^  e) {
 	}
@@ -121,6 +131,8 @@ private: System::Void toolStripMenuItem1_Click(System::Object^  sender, System::
 		ThreadWrapper::threadClipboardtoFile->Join();
 	}
 	Application::Exit();
+}
+private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
 }
 };
 }
