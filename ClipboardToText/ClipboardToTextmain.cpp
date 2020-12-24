@@ -27,7 +27,7 @@ int real_main() {
 			CtrlVtoActiveWindow();
 			Sleep(1000);
 		}
-
+		Sleep(4);
 	}
 	return 0;
 }
